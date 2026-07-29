@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -13,17 +16,35 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Sales extends AppCompatActivity {
+public class Help extends AppCompatActivity {
     private BottomNavigationView bottom;
-
+    private Button btnContact;
+    private TextView txtEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sales);
-
+        setContentView(R.layout.activity_help);
         bottom = findViewById(R.id.bottom);
+        btnContact = findViewById(R.id.btnContact);
+        txtEmail= findViewById(R.id.txtEmail);
+
+        btnContact.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:+233 271544334"));
+            startActivity(intent);
+
+        });
+
+        txtEmail.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(Uri.parse("mailto:iamafei68@gmail.com"));
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
+                }
+    });
 
         bottom.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -76,7 +97,6 @@ public class Sales extends AppCompatActivity {
             }
             return false;
         });
-
 
     }
 }
