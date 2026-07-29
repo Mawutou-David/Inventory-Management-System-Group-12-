@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".About">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/logo"
+                android:src="@drawable/splash_logo"
+                android:layout_margin="16dp"
+                android:contentDescription="App Logo"/>
+
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lina's Electronics"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version 1.0"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This Inventory Management System helps manage products, suppliers, stock levels, sales and reports for Lina's Electronics. It provides an easy way to monitor inventory and improve operations."
+                android:lineSpacingExtra="4dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginTop="40dp" />
+
+            <TextView
+                android:id="@+id/developer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Developed by Group 12A"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="60dp" />
+
+            <TextView
+                android:id="@+id/copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="c 2026 Lina's Electronics. All Rights Reserved."
+                android:textSize="16sp"
+                android:layout_marginTop="50dp" />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom"
+        app:labelVisibilityMode="labeled"
+        android:layout_alignParentBottom="true" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

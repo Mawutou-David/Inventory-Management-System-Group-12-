@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_item"
+        android:title="Dashboard"
+        android:icon="@drawable/baseline_home_24"/>
+
+    <item
+        android:id="@+id/product_item"
+        android:title="Products"
+        android:icon="@drawable/baseline_inventory_24"/>
+
+    <item
+        android:id="@+id/category_item"
+        android:title="Categories"
+        android:icon="@drawable/baseline_category_24"/>
+
+    <item
+        android:id="@+id/supply_item"
+        android:title="Suppliers"
+        android:icon="@drawable/baseline_supervisor_account_24"/>
+
+    <item
+        android:id="@+id/Purchase_item"
+        android:title="Purchases"
+        android:icon="@drawable/baseline_shopping_cart_24"/>
+
+
+    <item
+        android:id="@+id/sales_item"
+        android:title="Sales"
+       android:icon="@drawable/baseline_shopping_cart_24" />
+
+    <item
+        android:id="@+id/Customer_item"
+        android:title="Customers"
+        android:icon="@drawable/baseline_supervisor_account_24"/>
+
+    <item
+        android:id="@+id/stock_item"
+        android:title="Stock Adjustments"
+        android:icon="@drawable/baseline_rate_review_24"/>
+
+    <item
+        android:id="@+id/report_item"
+        android:title="Reports"
+        android:icon="@drawable/baseline_library_books_24"/>
+
+    <item
+        android:id="@+id/setting_item"
+        android:title="Settings"
+        android:icon="@drawable/baseline_settings_applications_24"/>
+    <item android:title="" />
+
+
+    <item
+        android:id="@+id/logout_item"
+        android:icon="@drawable/baseline_logout_24"
+        android:title="=Logout" />
+
+
+</menu>

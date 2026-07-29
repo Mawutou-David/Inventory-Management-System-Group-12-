@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        app:cardBackgroundColor="#BBDEFB"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imgsales"
+            android:layout_width="55dp"
+            android:layout_height="58dp"
+            android:src="@drawable/sales"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textsales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text="12,450"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/textsales"
+            app:layout_constraintStart_toEndOf="@+id/imgsales" />
+
+        <TextView
+            android:id="@+id/textsales1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Sales"
+            android:layout_margin="58dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textsales"
+            app:layout_constraintTop_toBottomOf="@id/textsales2"
+            android:layout_marginStart="4dp"/>
+
+
+        <TextView
+            android:id="@+id/textsales2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_trending_up_24"
+            android:text="15% From last Month"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:drawablePadding="9dp"
+            android:layout_marginTop="90dp" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

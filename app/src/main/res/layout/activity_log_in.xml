@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    android:fillViewport="true">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/bg_login"
+
+        android:padding="24dp">
+
+        <ImageView
+
+            android:id="@+id/imgLogo"
+
+            android:layout_width="120dp"
+
+            android:layout_height="120dp"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="40dp"
+
+            android:src="@drawable/splash_logo" />
+
+        <!-- Company Name -->
+
+        <TextView
+
+            android:id="@+id/txtCompany"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/imgLogo"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="12dp"
+
+            android:text="LINA'S ELECTRONICS"
+
+            android:textColor="#FFFFFF"
+
+            android:textSize="26sp"
+
+            android:textStyle="bold" />
+
+
+        <TextView
+
+            android:id="@+id/txtSubtitle"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/txtCompany"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="6dp"
+
+            android:text="Smart Inventory Management System"
+
+            android:textColor="#C7D5D8"
+
+            android:textSize="14sp" />
+
+
+        <TextView
+
+            android:id="@+id/txtWelcome"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/txtSubtitle"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="45dp"
+
+            android:text="Welcome Back!"
+
+            android:textColor="#FFFFFF"
+
+            android:textSize="30sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/txtLogin"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/txtWelcome"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="8dp"
+
+            android:text="Please login to continue"
+
+            android:textColor="#BFC9CA"
+
+            android:textSize="16sp" />
+
+
+        <EditText
+
+            android:id="@+id/etUsername"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="58dp"
+
+            android:layout_below="@id/txtLogin"
+
+            android:layout_marginTop="35dp"
+
+            android:background="@drawable/edittext_background"
+
+            android:drawableStart="@drawable/baseline_account_circle_24"
+
+            android:drawablePadding="12dp"
+
+            android:hint="Username"
+
+            android:padding="16dp"
+
+            android:textColor="#000000"
+
+            android:textColorHint="#8A8A8A" />
+
+
+        <EditText
+
+            android:id="@+id/etPassword"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="58dp"
+
+            android:layout_below="@id/etUsername"
+
+            android:layout_marginTop="18dp"
+
+            android:background="@drawable/edittext_background"
+
+            android:drawableStart="@drawable/baseline_lock_24"
+
+            android:drawableEnd="@drawable/baseline_remove_red_eye_24"
+
+            android:drawablePadding="12dp"
+
+            android:hint="Password"
+
+            android:inputType="textPassword"
+
+            android:padding="16dp"
+
+            android:textColor="#000000"
+
+            android:textColorHint="#8A8A8A" />
+
+
+        <CheckBox
+
+            android:id="@+id/checkRemember"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/etPassword"
+
+            android:layout_marginTop="15dp"
+
+            android:text="Remember Me"
+
+            android:textColor="#FFFFFF" />
+
+
+        <Button
+
+            android:id="@+id/btnLogin"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="58dp"
+
+            android:layout_below="@id/checkRemember"
+
+            android:layout_marginTop="25dp"
+
+            android:drawableStart="@drawable/baseline_login_24"
+
+            android:background="@drawable/button_background"
+
+            android:text="LOGIN"
+
+            android:textAllCaps="true"
+
+            android:textColor="#FFFFFF"
+
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+
+            android:id="@+id/txtForgot"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/btnLogin"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="18dp"
+
+            android:text="Forgot Password?"
+
+            android:textColor="#4DD0E1"
+
+            android:textSize="15sp" />
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/txtForgot"
+
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="40dp"
+
+            android:layout_marginBottom="20dp"
+
+            android:text="Version 1.0"
+
+            android:textColor="#BFC9CA"
+
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+</ScrollView>
