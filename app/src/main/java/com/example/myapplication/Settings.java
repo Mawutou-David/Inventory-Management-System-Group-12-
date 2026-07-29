@@ -55,6 +55,11 @@ public class Settings extends AppCompatActivity {
             startActivity(intent);
         });
 
+        help.setOnClickListener(v ->{
+            Intent intent=new Intent(Settings.this,Help.class);
+            startActivity(intent);
+        });
+
         dark.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
                 AppCompatDelegate.setDefaultNightMode(
