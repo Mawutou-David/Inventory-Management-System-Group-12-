@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton;
 public class Settings extends AppCompatActivity {
     private BottomNavigationView bottom;
     private LinearLayout account, change, help,about;
-    private Switch dark;
+    private Switch switchDarkMode;
 
 
     @Override
@@ -34,7 +34,7 @@ public class Settings extends AppCompatActivity {
         MaterialButton btnLogout = findViewById(R.id.btnLogout);
         bottom =findViewById(R.id.bottom);
         account=findViewById(R.id.account);
-        dark=findViewById(R.id.dark);
+        switchDarkMode=findViewById(R.id.switchDarkMode);
         change=findViewById(R.id.change);
         help=findViewById(R.id.help);
         about=findViewById(R.id.about);
@@ -60,7 +60,7 @@ public class Settings extends AppCompatActivity {
             startActivity(intent);
         });
 
-        dark.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        switchDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
                 AppCompatDelegate.setDefaultNightMode(
                         AppCompatDelegate.MODE_NIGHT_YES

@@ -7,6 +7,329 @@
     android:layout_height="match_parent"
     tools:context=".Add">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom">
+
+
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+
+            android:padding="16dp">
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+
+                android:text="Add Product"
+
+                android:textColor="#000000"
+
+                android:textSize="24sp"
+
+                android:textStyle="bold" />
+
+
+            <ImageView
+
+            android:id="@+id/imgProduct"
+
+            android:layout_width="120dp"
+
+            android:layout_height="120dp"
+
+            android:layout_gravity="center"
+
+            android:layout_marginTop="16dp"
+
+            android:src="@drawable/products"
+
+            android:background="#EAEAEA"
+
+            android:padding="10dp"/>
+
+          <Button
+
+            android:id="@+id/btnSelectImage"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:text="Select Image"
+
+            android:layout_gravity="center"
+
+            android:layout_marginTop="8dp"/>
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/etProductName"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Product Name"/>
+
+          </com.google.android.material.textfield.TextInputLayout>
+
+
+           <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/etProductID"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Product ID"/>
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp">
+
+              <AutoCompleteTextView
+
+                android:id="@+id/actCategory"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                  android:padding="14dp"
+
+                android:hint="Category"/>
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/etSupplier"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Supplier"/>
+
+          </com.google.android.material.textfield.TextInputLayout>
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/etPrice"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Price"
+
+                android:inputType="numberDecimal"/>
+
+          </com.google.android.material.textfield.TextInputLayout>
+
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/etQuantity"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+
+                android:hint="Quantity"
+
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+           <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:text="Product QR Code"
+
+            android:textStyle="bold"
+
+            android:layout_marginTop="20dp"/>
+
+           <ImageView
+
+            android:id="@+id/imgQRCode"
+
+            android:layout_width="180dp"
+
+            android:layout_height="180dp"
+
+            android:layout_gravity="center"
+
+            android:layout_marginTop="10dp"
+
+            android:src="@drawable/baseline_qr_code_scanner_24"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+
+            android:gravity="center"
+
+            android:layout_marginTop="10dp">
+
+            <Button
+
+                android:id="@+id/btnGenerateQR"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Generate QR"/>
+
+            <Button
+
+                android:id="@+id/btnScanQR"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Scan QR"
+
+                android:layout_marginStart="12dp"/>
+
+            </LinearLayout>
+
+
+
+          <LinearLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+
+            android:gravity="center"
+
+            android:layout_marginTop="20dp">
+
+            <Button
+
+                android:id="@+id/btnSave"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Save"/>
+
+            <Button
+
+                android:id="@+id/btnUpdate"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Update"
+
+                android:layout_marginStart="8dp"/>
+
+            <Button
+
+                android:id="@+id/btnCancel"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:text="Cancel"
+
+                android:layout_marginStart="8dp"/>
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom"
         android:layout_width="match_parent"
