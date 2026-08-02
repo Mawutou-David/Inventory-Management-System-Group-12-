@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.net.Uri;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,12 +80,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             }
             binding.tvUpdated.setText(updatedAt);
             
-            // Set icon based on category name/code
+            // Set icon based on category name using the requested placeholder names
+            Context context = binding.getRoot().getContext();
             int iconRes = R.drawable.baseline_category_24;
             String name = category.getName().toLowerCase();
-            if (name.contains("smartphone") || name.contains("phone")) iconRes = R.drawable.phone;
-            else if (name.contains("inventory")) iconRes = R.drawable.baseline_inventory_24;
-            else if (name.contains("account")) iconRes = R.drawable.baseline_account_circle_24;
+            String drawableName = "ic_category_default";
+
+            if (name.contains("smartphone") || name.contains("phone")) drawableName = "ic_smartphone_category";
+            else if (name.contains("laptop")) drawableName = "ic_laptop_category";
+            else if (name.contains("accessories")) drawableName = "ic_accessories_category";
+            else if (name.contains("audio") || name.contains("speaker") || name.contains("headphone")) drawableName = "ic_audio_category";
+            else if (name.contains("printer")) drawableName = "ic_printer_category";
+            else if (name.contains("network")) drawableName = "ic_network_category";
+            
+            int resId = context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
+            if (resId != 0) {
+                iconRes = resId;
+            } else {
+                // Fallback to existing drawables if the specific placeholders aren't created yet
+                if (name.contains("smartphone") || name.contains("phone")) iconRes = R.drawable.phone;
+                else if (name.contains("inventory")) iconRes = R.drawable.baseline_inventory_24;
+                else if (name.contains("account")) iconRes = R.drawable.baseline_account_circle_24;
+            }
             
             binding.imgCategory.setImageResource(iconRes);
 
