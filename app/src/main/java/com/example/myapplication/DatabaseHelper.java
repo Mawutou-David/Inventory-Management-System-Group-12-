@@ -194,6 +194,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_CATEGORIES, null);
     }
 
+    public int getProductCountForCategory(String categoryName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_PRODUCTS + " WHERE " + COL_PROD_CATEGORY + "=?", new String[]{categoryName});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    public int getTotalStockForCategory(String categoryName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(" + COL_PROD_QUANTITY + ") FROM " + TABLE_PRODUCTS + " WHERE " + COL_PROD_CATEGORY + "=?", new String[]{categoryName});
+        int total = 0;
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(0);
+        }
+        cursor.close();
+        return total;
+    }
+
     public boolean isCategoryDuplicate(String name, String code) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + COL_CAT_NAME + "=? OR " + COL_CAT_CODE + "=?", new String[]{name, code});

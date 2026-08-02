@@ -21,14 +21,17 @@ public class DemoDataSeeder {
             return;
         }
 
-        // 1. Seed Categories (to support Product associations)
+        // 1. Seed Categories (as requested)
         dbHelper.addCategory("Smartphones", "CAT001", "Latest mobile devices", null, 1);
         dbHelper.addCategory("Laptops", "CAT002", "Portable computers", null, 1);
-        dbHelper.addCategory("Speakers", "CAT003", "Audio output devices", null, 1);
+        dbHelper.addCategory("Tablets", "CAT003", "Large screen mobile devices", null, 1);
         dbHelper.addCategory("Accessories", "CAT004", "Computer and phone accessories", null, 1);
-        dbHelper.addCategory("Printers", "CAT005", "Printing and scanning devices", null, 1);
-        dbHelper.addCategory("Headphones", "CAT006", "Personal audio devices", null, 1);
+        dbHelper.addCategory("Audio Devices", "CAT005", "Audio output devices", null, 1);
+        dbHelper.addCategory("Printers", "CAT006", "Printing and scanning devices", null, 1);
         dbHelper.addCategory("Networking", "CAT007", "Network equipment", null, 1);
+        dbHelper.addCategory("Storage Devices", "CAT008", "Hard drives and flash drives", null, 1);
+        dbHelper.addCategory("Smart Watches", "CAT009", "Wearable technology", null, 1);
+        dbHelper.addCategory("Computer Components", "CAT010", "PC parts and components", null, 1);
 
         // 2. Seed Suppliers (to support Product associations)
         dbHelper.addSupplier("Samsung Ghana", "0244111222", "Airport Residential Area, Accra");
@@ -47,10 +50,10 @@ public class DemoDataSeeder {
         dbHelper.addProduct("PRD002", "iPhone 15", "Smartphones", "Apple Distributor", 12500.00, 12);
         dbHelper.addProduct("PRD003", "HP Pavilion 15", "Laptops", "HP Ghana", 9800.00, 8);
         dbHelper.addProduct("PRD004", "Dell Inspiron 3520", "Laptops", "Dell Technologies", 8900.00, 10);
-        dbHelper.addProduct("PRD005", "JBL Flip 6", "Speakers", "JBL", 1850.00, 18);
+        dbHelper.addProduct("PRD005", "JBL Flip 6", "Audio Devices", "JBL", 1850.00, 18);
         dbHelper.addProduct("PRD006", "Logitech MX Master 3S", "Accessories", "Logitech", 1450.00, 20);
         dbHelper.addProduct("PRD007", "Canon PIXMA G3430", "Printers", "Canon", 3100.00, 6);
-        dbHelper.addProduct("PRD008", "Sony WH-1000XM5", "Headphones", "Sony", 4800.00, 9);
+        dbHelper.addProduct("PRD008", "Sony WH-1000XM5", "Audio Devices", "Sony", 4800.00, 9);
         dbHelper.addProduct("PRD009", "Lenovo ThinkPad E16", "Laptops", "Lenovo", 11000.00, 5);
         dbHelper.addProduct("PRD010", "TP-Link Archer AX55", "Networking", "TP-Link", 1200.00, 15);
         

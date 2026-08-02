@@ -57,15 +57,36 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
 
         public void bind(Category category, OnCategoryClickListener listener) {
+            DatabaseHelper dbHelper = new DatabaseHelper(binding.getRoot().getContext());
+            int productCount = dbHelper.getProductCountForCategory(category.getName());
+            int totalStock = dbHelper.getTotalStockForCategory(category.getName());
+
             binding.tvCategoryName.setText(category.getName());
             binding.tvCategoryCode.setText("Code: " + category.getCode());
             binding.tvCategoryStatus.setText(category.getStatus() == 1 ? "Active" : "Inactive");
             binding.tvCategoryStatus.setTextColor(category.getStatus() == 1 ? 0xFF4CAF50 : 0xFFF44336);
-            binding.tvUpdated.setText(category.getUpdatedAt());
-            
-            if (category.getImage() != null && !category.getImage().isEmpty()) {
-                binding.imgCategory.setImageURI(Uri.parse(category.getImage()));
+            binding.tvNumProducts.setText("Products: " + productCount);
+            binding.tvTotalStock.setText("Total Stock: " + totalStock);
+
+            // Format date if it's a timestamp
+            String updatedAt = category.getUpdatedAt();
+            try {
+                long timestamp = Long.parseLong(updatedAt);
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+                updatedAt = sdf.format(new java.util.Date(timestamp));
+            } catch (NumberFormatException e) {
+                // Not a timestamp, use as is
             }
+            binding.tvUpdated.setText(updatedAt);
+            
+            // Set icon based on category name/code
+            int iconRes = R.drawable.baseline_category_24;
+            String name = category.getName().toLowerCase();
+            if (name.contains("smartphone") || name.contains("phone")) iconRes = R.drawable.phone;
+            else if (name.contains("inventory")) iconRes = R.drawable.baseline_inventory_24;
+            else if (name.contains("account")) iconRes = R.drawable.baseline_account_circle_24;
+            
+            binding.imgCategory.setImageResource(iconRes);
 
             binding.btnView.setOnClickListener(v -> listener.onView(category));
             binding.btnEdit.setOnClickListener(v -> listener.onEdit(category));

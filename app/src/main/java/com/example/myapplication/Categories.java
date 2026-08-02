@@ -92,7 +92,18 @@ public class Categories extends AppCompatActivity implements CategoryAdapter.OnC
     private void updateStats(int total, int active) {
         binding.tvTotalCount.setText(String.valueOf(total));
         binding.tvActiveCount.setText(String.valueOf(active));
-        binding.tvLowStockCount.setText("0"); // Placeholder
+        
+        // Count low stock products across all categories for the third card
+        int lowStockTotal = 0;
+        Cursor pCursor = dbHelper.getAllProducts();
+        if (pCursor.moveToFirst()) {
+            do {
+                int qty = pCursor.getInt(pCursor.getColumnIndexOrThrow(DatabaseHelper.COL_PROD_QUANTITY));
+                if (qty > 0 && qty <= 5) lowStockTotal++;
+            } while (pCursor.moveToNext());
+        }
+        pCursor.close();
+        binding.tvLowStockCount.setText(String.valueOf(lowStockTotal));
     }
 
     private void filter(String text) {
