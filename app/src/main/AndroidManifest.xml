@@ -19,6 +19,12 @@
             android:name=".Help"
             android:exported="false" />
         <activity
+            android:name=".SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".CustomerDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryAddActivity"
             android:exported="false" />
         <activity

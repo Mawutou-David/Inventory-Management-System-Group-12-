@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Inventory.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Incremented version
 
     // Products table
     public static final String TABLE_PRODUCTS = "products";
@@ -29,6 +33,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_CAT_IMAGE = "image";
     public static final String COL_CAT_STATUS = "status";
     public static final String COL_CAT_UPDATED_AT = "updated_at";
+
+    // Customers table
+    public static final String TABLE_CUSTOMERS = "customers";
+    public static final String COL_CUST_ID = "id";
+    public static final String COL_CUST_NAME = "name";
+    public static final String COL_CUST_PHONE = "phone";
+    public static final String COL_CUST_EMAIL = "email";
+    public static final String COL_CUST_COMPANY = "company";
+    public static final String COL_CUST_ADDRESS = "address";
+    public static final String COL_CUST_TYPE = "type";
+    public static final String COL_CUST_TIN = "tin";
+    public static final String COL_CUST_NOTES = "notes";
+    public static final String COL_CUST_BALANCE = "balance";
+    public static final String COL_CUST_STATUS = "status";
+    public static final String COL_CUST_REG_DATE = "reg_date";
+    public static final String COL_CUST_LAST_PURCHASE = "last_purchase";
+    public static final String COL_CUST_TOTAL_PURCHASES = "total_purchases";
 
     // Suppliers table
     public static final String TABLE_SUPPLIERS = "suppliers";
@@ -68,6 +89,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_CAT_STATUS + " INTEGER, " +
                 COL_CAT_UPDATED_AT + " TEXT)";
 
+        String createCustomersTable = "CREATE TABLE " + TABLE_CUSTOMERS + " (" +
+                COL_CUST_ID + " TEXT PRIMARY KEY, " +
+                COL_CUST_NAME + " TEXT, " +
+                COL_CUST_PHONE + " TEXT, " +
+                COL_CUST_EMAIL + " TEXT, " +
+                COL_CUST_COMPANY + " TEXT, " +
+                COL_CUST_ADDRESS + " TEXT, " +
+                COL_CUST_TYPE + " TEXT, " +
+                COL_CUST_TIN + " TEXT, " +
+                COL_CUST_NOTES + " TEXT, " +
+                COL_CUST_BALANCE + " REAL, " +
+                COL_CUST_STATUS + " INTEGER, " +
+                COL_CUST_REG_DATE + " TEXT, " +
+                COL_CUST_LAST_PURCHASE + " TEXT, " +
+                COL_CUST_TOTAL_PURCHASES + " INTEGER)";
+
         String createSuppliersTable = "CREATE TABLE " + TABLE_SUPPLIERS + " (" +
                 COL_SUPP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_SUPP_NAME + " TEXT, " +
@@ -83,17 +120,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createProductsTable);
         db.execSQL(createCategoriesTable);
+        db.execSQL(createCustomersTable);
         db.execSQL(createSuppliersTable);
         db.execSQL(createPurchasesTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUPPLIERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PURCHASES);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("CREATE TABLE " + TABLE_CUSTOMERS + " (" +
+                    COL_CUST_ID + " TEXT PRIMARY KEY, " +
+                    COL_CUST_NAME + " TEXT, " +
+                    COL_CUST_PHONE + " TEXT, " +
+                    COL_CUST_EMAIL + " TEXT, " +
+                    COL_CUST_COMPANY + " TEXT, " +
+                    COL_CUST_ADDRESS + " TEXT, " +
+                    COL_CUST_TYPE + " TEXT, " +
+                    COL_CUST_TIN + " TEXT, " +
+                    COL_CUST_NOTES + " TEXT, " +
+                    COL_CUST_BALANCE + " REAL, " +
+                    COL_CUST_STATUS + " INTEGER, " +
+                    COL_CUST_REG_DATE + " TEXT, " +
+                    COL_CUST_LAST_PURCHASE + " TEXT, " +
+                    COL_CUST_TOTAL_PURCHASES + " INTEGER)");
+        }
+    }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     // Product methods
@@ -180,6 +236,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean isCategoryDuplicate(String name, String code) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CATEGORIES + " WHERE " + COL_CAT_NAME + "=? OR " + COL_CAT_CODE + "=?", new String[]{name, code});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    // Customer methods
+    public boolean addCustomer(String id, String name, String phone, String email, String company, String address, String type, String tin, String notes, double balance, int status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_CUST_ID, id);
+        values.put(COL_CUST_NAME, name);
+        values.put(COL_CUST_PHONE, phone);
+        values.put(COL_CUST_EMAIL, email);
+        values.put(COL_CUST_COMPANY, company);
+        values.put(COL_CUST_ADDRESS, address);
+        values.put(COL_CUST_TYPE, type);
+        values.put(COL_CUST_TIN, tin);
+        values.put(COL_CUST_NOTES, notes);
+        values.put(COL_CUST_BALANCE, balance);
+        values.put(COL_CUST_STATUS, status);
+        values.put(COL_CUST_REG_DATE, getDateTime());
+        values.put(COL_CUST_LAST_PURCHASE, "N/A");
+        values.put(COL_CUST_TOTAL_PURCHASES, 0);
+
+        long result = db.insert(TABLE_CUSTOMERS, null, values);
+        return result != -1;
+    }
+
+    public boolean updateCustomer(String id, String name, String phone, String email, String company, String address, String type, String tin, String notes, double balance, int status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_CUST_NAME, name);
+        values.put(COL_CUST_PHONE, phone);
+        values.put(COL_CUST_EMAIL, email);
+        values.put(COL_CUST_COMPANY, company);
+        values.put(COL_CUST_ADDRESS, address);
+        values.put(COL_CUST_TYPE, type);
+        values.put(COL_CUST_TIN, tin);
+        values.put(COL_CUST_NOTES, notes);
+        values.put(COL_CUST_BALANCE, balance);
+        values.put(COL_CUST_STATUS, status);
+
+        return db.update(TABLE_CUSTOMERS, values, COL_CUST_ID + "=?", new String[]{id}) > 0;
+    }
+
+    public boolean deleteCustomer(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Here we would check for linked sales, but since sales are not fully implemented in DB yet, we just delete
+        return db.delete(TABLE_CUSTOMERS, COL_CUST_ID + "=?", new String[]{id}) > 0;
+    }
+
+    public Cursor getAllCustomers() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_CUSTOMERS, null);
+    }
+
+    public boolean isCustomerDuplicate(String id, String phone) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CUSTOMERS + " WHERE " + COL_CUST_ID + "=? OR " + COL_CUST_PHONE + "=?", new String[]{id, phone});
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;

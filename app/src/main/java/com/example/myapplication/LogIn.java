@@ -37,6 +37,11 @@ public class LogIn extends AppCompatActivity {
         txtForgot=findViewById(R.id.txtForgot);
         etPassword=findViewById(R.id.etPassword);
         btnLogin=findViewById(R.id.btnLogin);
+        TextView txtRegister = findViewById(R.id.txtRegister);
+
+        txtRegister.setOnClickListener(v -> {
+            startActivity(new Intent(LogIn.this, SignUp.class));
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
