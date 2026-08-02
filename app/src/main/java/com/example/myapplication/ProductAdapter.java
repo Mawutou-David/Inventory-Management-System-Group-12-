@@ -59,6 +59,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             binding.tvProductPrice.setText("GH₵ " + product.getPrice());
             binding.tvProductQuantity.setText("Qty: " + product.getQuantity());
 
+            // Set stock status
+            if (product.getQuantity() <= 0) {
+                binding.tvStockStatus.setText("Out of Stock");
+                binding.tvStockStatus.setTextColor(binding.getRoot().getContext().getResources().getColor(android.R.color.holo_red_dark));
+            } else if (product.getQuantity() <= 5) {
+                binding.tvStockStatus.setText("Low Stock");
+                binding.tvStockStatus.setTextColor(binding.getRoot().getContext().getResources().getColor(android.R.color.holo_orange_dark));
+            } else {
+                binding.tvStockStatus.setText("In Stock");
+                binding.tvStockStatus.setTextColor(binding.getRoot().getContext().getResources().getColor(android.R.color.holo_green_dark));
+            }
+
             binding.btnEdit.setOnClickListener(v -> listener.onEdit(product));
             binding.btnDelete.setOnClickListener(v -> listener.onDelete(product));
         }

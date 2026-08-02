@@ -57,6 +57,7 @@
         android:id="@+id/recyclerViewProducts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        tools:listitem="@layout/item_product"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintBottom_toTopOf="@id/bottom"
         android:padding="8dp"/>

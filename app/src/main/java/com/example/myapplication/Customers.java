@@ -12,9 +12,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.database.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customers extends AppCompatActivity {
     private BottomNavigationView bottom;
+    private RecyclerView recyclerView;
+    private CustomerAdapter adapter;
+    private List<Customer> customerList = new ArrayList<>();
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,61 +31,34 @@ public class Customers extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_customers);
 
+        dbHelper = new DatabaseHelper(this);
+        recyclerView = findViewById(R.id.recyclerViewCustomers);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CustomerAdapter(customerList);
+        recyclerView.setAdapter(adapter);
+
+        loadCustomers();
+
         bottom =findViewById(R.id.bottom);
+        
+        // ... rest of the code ...
+    }
 
-        bottom.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.home) {
-                startActivity(new Intent(this, Dashboard.class));
-                return true;
-            }
-            if (id == R.id.product) {
-                startActivity(new Intent(this, Products.class));
-                return true;
-            }
-            if (id == R.id.add) {
-                startActivity(new Intent(this, Add.class));
-                return true;
-            }
-            if (id == R.id.sales) {
-                startActivity(new Intent(this, Sales.class));
-                return true;
-            }
-            if (id == R.id.more) {
-                PopupMenu popupMenu = new PopupMenu(this, bottom);
-                popupMenu.getMenu().add("Settings");
-                popupMenu.getMenu().add("Logout");
-                popupMenu.setOnMenuItemClickListener(menuItem -> {
-
-                    if (menuItem.getTitle().equals("Settings")) {
-                        startActivity(new Intent(this, Settings.class));
-                        return true;
-                    }
-                    if (menuItem.getTitle().equals("Logout")) {
-                        new AlertDialog.Builder(this)
-                                .setTitle("Logout")
-                                .setMessage("Do you want to exit?")
-                                .setPositiveButton("Yes", (dialog, which) -> {
-
-                                    Intent intent = new Intent(this, LogIn.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                    finish();
-                                })
-                                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                                .show();
-                        return true;
-                    }
-                    return false;
-
-                });
-                popupMenu.show();
-                return true;
-            }
-            return false;
-
-        });
-
-
+    private void loadCustomers() {
+        customerList.clear();
+        Cursor cursor = dbHelper.getAllCustomers();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                customerList.add(new Customer(
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CUST_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CUST_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CUST_PHONE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CUST_EMAIL)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CUST_REG_DATE))
+                ));
+            } while (cursor.moveToNext());
+            cursor.close();
         }
+        adapter.notifyDataSetChanged();
+    }
 }

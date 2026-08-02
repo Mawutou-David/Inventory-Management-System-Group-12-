@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".Customers">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCustomers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        tools:listitem="@layout/item_customer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom"
         android:layout_width="match_parent"

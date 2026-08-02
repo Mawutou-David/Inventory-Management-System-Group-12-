@@ -22,6 +22,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // Seed demo data if database is empty
+        DemoDataSeeder.seedData(this);
+
         logo=findViewById(R.id.logo);
         slogan=findViewById(R.id.slogan);
 

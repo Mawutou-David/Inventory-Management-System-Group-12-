@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Inventory.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Products table
     public static final String TABLE_PRODUCTS = "products";
@@ -44,6 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_PURCH_QUANTITY = "quantity";
     public static final String COL_PURCH_DATE = "date";
     public static final String COL_PURCH_TOTAL = "total";
+
+    // Customers table
+    public static final String TABLE_CUSTOMERS = "customers";
+    public static final String COL_CUST_ID = "id";
+    public static final String COL_CUST_NAME = "name";
+    public static final String COL_CUST_PHONE = "phone";
+    public static final String COL_CUST_EMAIL = "email";
+    public static final String COL_CUST_REG_DATE = "reg_date";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -81,10 +89,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_PURCH_DATE + " TEXT, " +
                 COL_PURCH_TOTAL + " REAL)";
 
+        String createCustomersTable = "CREATE TABLE " + TABLE_CUSTOMERS + " (" +
+                COL_CUST_ID + " TEXT PRIMARY KEY, " +
+                COL_CUST_NAME + " TEXT, " +
+                COL_CUST_PHONE + " TEXT, " +
+                COL_CUST_EMAIL + " TEXT, " +
+                COL_CUST_REG_DATE + " TEXT)";
+
         db.execSQL(createProductsTable);
         db.execSQL(createCategoriesTable);
         db.execSQL(createSuppliersTable);
         db.execSQL(createPurchasesTable);
+        db.execSQL(createCustomersTable);
     }
 
     @Override
@@ -93,6 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUPPLIERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PURCHASES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
         onCreate(db);
     }
 
@@ -218,5 +235,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllPurchases() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_PURCHASES, null);
+    }
+
+    // Customer methods
+    public boolean addCustomer(String id, String name, String phone, String email, String regDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_CUST_ID, id);
+        values.put(COL_CUST_NAME, name);
+        values.put(COL_CUST_PHONE, phone);
+        values.put(COL_CUST_EMAIL, email);
+        values.put(COL_CUST_REG_DATE, regDate);
+
+        long result = db.insert(TABLE_CUSTOMERS, null, values);
+        return result != -1;
+    }
+
+    public Cursor getAllCustomers() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_CUSTOMERS, null);
+    }
+
+    public boolean isDatabaseEmpty() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_PRODUCTS, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+
+        if (count > 0) return false;
+
+        cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_CUSTOMERS, null);
+        cursor.moveToFirst();
+        count = cursor.getInt(0);
+        cursor.close();
+
+        return count == 0;
     }
 }
