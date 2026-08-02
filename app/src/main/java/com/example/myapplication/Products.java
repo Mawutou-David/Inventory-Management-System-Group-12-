@@ -11,16 +11,35 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.database.Cursor;
 
 public class Products extends AppCompatActivity {
     private BottomNavigationView bottom;
+    private RecyclerView recyclerView;
+    private ProductAdapter adapter;
+    private List<Product> productList;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_products);
+
+        dbHelper = new DatabaseHelper(this);
+        productList = new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerViewProducts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        loadProducts();
 
         bottom =findViewById(R.id.bottom);
         bottom.setOnItemSelectedListener(item -> {
@@ -74,7 +93,22 @@ public class Products extends AppCompatActivity {
             }
             return false;
         });
+    }
 
-
+    private void loadProducts() {
+        productList.clear();
+        Cursor cursor = dbHelper.getAllProducts();
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PROD_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PROD_NAME));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PROD_PRICE));
+                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PROD_QUANTITY));
+                productList.add(new Product(id, name, "", "", price, quantity));
+            } while (cursor.moveToNext());
         }
+        cursor.close();
+        adapter = new ProductAdapter(productList);
+        recyclerView.setAdapter(adapter);
+    }
 }

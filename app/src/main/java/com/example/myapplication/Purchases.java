@@ -11,10 +11,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.database.Cursor;
 
 public class Purchases extends AppCompatActivity {
     private BottomNavigationView bottom;
+    private RecyclerView recyclerView;
+    private PurchaseAdapter adapter;
+    private List<Purchase> purchaseList;
+    private DatabaseHelper dbHelper;
 
 
     @Override
@@ -22,6 +34,13 @@ public class Purchases extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_purchases);
+
+        dbHelper = new DatabaseHelper(this);
+        purchaseList = new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerViewPurchases);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        loadPurchases();
 
         bottom =findViewById(R.id.bottom);
 
@@ -76,7 +95,30 @@ public class Purchases extends AppCompatActivity {
             }
             return false;
         });
+    }
 
-
+    private void loadPurchases() {
+        purchaseList.clear();
+        Cursor cursor = dbHelper.getAllPurchases();
+        if (cursor.getCount() == 0) {
+            // Add some mock data
+            dbHelper.addPurchase("LED Bulb 12W", 50, "2023-10-25", 750.00);
+            dbHelper.addPurchase("Ailyons Iron 240V", 20, "2023-10-26", 1200.00);
+            cursor = dbHelper.getAllPurchases();
         }
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PURCH_ID));
+                String prodName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PURCH_PROD_NAME));
+                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PURCH_QUANTITY));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PURCH_DATE));
+                double total = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PURCH_TOTAL));
+                purchaseList.add(new Purchase(id, prodName, quantity, date, total));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        adapter = new PurchaseAdapter(purchaseList);
+        recyclerView.setAdapter(adapter);
+    }
 }

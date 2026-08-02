@@ -24,81 +24,29 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class Add extends AppCompatActivity {
     private BottomNavigationView bottom;
-    private EditText etProductName, etProductID,etPrice, etQuantity;
+    private EditText etProductName, etProductID, etPrice, etQuantity;
     private ImageView imgQRCode;
-    private Button btnGenerateQR;
+    private Button btnGenerateQR, btnSave;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add);
-        bottom =findViewById(R.id.bottom);
-        etProductName=findViewById(R.id.etProductName);
-        etProductID=findViewById(R.id.etProductID);
-        etPrice=findViewById(R.id.etPrice);
-        etQuantity=findViewById(R.id.etQuantity);
+        dbHelper = new DatabaseHelper(this);
+        bottom = findViewById(R.id.bottom);
+        etProductName = findViewById(R.id.etProductName);
+        etProductID = findViewById(R.id.etProductID);
+        etPrice = findViewById(R.id.etPrice);
+        etQuantity = findViewById(R.id.etQuantity);
 
-        imgQRCode=findViewById(R.id.imgQRCode);
-        btnGenerateQR=findViewById(R.id.btnGenerateQR);
+        imgQRCode = findViewById(R.id.imgQRCode);
+        btnGenerateQR = findViewById(R.id.btnGenerateQR);
+        btnSave = findViewById(R.id.btnSave);
 
         btnGenerateQR.setOnClickListener(v -> generateQRCode());
-
-    }
-
-    private void generateQRCode() {
-
-        String productData =
-
-                "Product: " + etProductName.getText().toString() +
-
-                        "\nID: " + etProductID.getText().toString() +
-
-                        "\nPrice: " + etPrice.getText().toString() +
-
-                        "\nQuantity: " + etQuantity.getText().toString();
-
-        if (productData.trim().isEmpty()) {
-
-            Toast.makeText(this, "Enter product details first", Toast.LENGTH_SHORT).show();
-
-            return;
-
-        }
-
-        try {
-
-            MultiFormatWriter writer = new MultiFormatWriter();
-
-            BitMatrix matrix = writer.encode(
-
-                    productData,
-
-                    BarcodeFormat.QR_CODE,
-
-                    500,
-
-                    500
-
-            );
-
-            BarcodeEncoder encoder = new BarcodeEncoder();
-
-            Bitmap bitmap = encoder.createBitmap(matrix);
-
-            imgQRCode.setImageBitmap(bitmap);
-
-        } catch (Exception e) {
-
-            Toast.makeText(this,
-
-                    "QR Generation Failed",
-
-                    Toast.LENGTH_SHORT).show();
-
-        }
-
-
+        btnSave.setOnClickListener(v -> saveProduct());
 
         bottom.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -150,10 +98,59 @@ public class Add extends AppCompatActivity {
                 return true;
             }
             return false;
-
         });
+    }
 
+    private void generateQRCode() {
+        String productData =
+                "Product: " + etProductName.getText().toString() +
+                        "\nID: " + etProductID.getText().toString() +
+                        "\nPrice: " + etPrice.getText().toString() +
+                        "\nQuantity: " + etQuantity.getText().toString();
 
+        if (productData.trim().isEmpty()) {
+            Toast.makeText(this, "Enter product details first", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        try {
+            MultiFormatWriter writer = new MultiFormatWriter();
+            BitMatrix matrix = writer.encode(
+                    productData,
+                    BarcodeFormat.QR_CODE,
+                    500,
+                    500
+            );
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            imgQRCode.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Toast.makeText(this,
+                    "QR Generation Failed",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveProduct() {
+        String name = etProductName.getText().toString();
+        String id = etProductID.getText().toString();
+        String priceStr = etPrice.getText().toString();
+        String quantityStr = etQuantity.getText().toString();
+
+        if (name.isEmpty() || id.isEmpty() || priceStr.isEmpty() || quantityStr.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double price = Double.parseDouble(priceStr);
+        int quantity = Integer.parseInt(quantityStr);
+
+        boolean success = dbHelper.addProduct(id, name, "", "", price, quantity);
+        if (success) {
+            Toast.makeText(this, "Product added successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Failed to add product", Toast.LENGTH_SHORT).show();
+        }
     }
 }
