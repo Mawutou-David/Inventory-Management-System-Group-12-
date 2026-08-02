@@ -20,11 +20,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imgProduct"
+                android:id="@+id/imgCategory"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/products"/>
+                android:src="@drawable/baseline_category_24"
+                android:contentDescription="Category Image" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,44 +35,68 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvProductName"
+                    android:id="@+id/tvCategoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Name"
+                    android:text="Electronics"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvProductID"
+                    android:id="@+id/tvCategoryCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ID: P001"
+                    android:text="Code: CAT001"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvCategoryStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:textColor="#4CAF50"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvUpdated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="2023-10-27"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvNumProducts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Products: 24"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvTotalStock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="end"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvProductPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GH₵ 0.00"
-                    android:textColor="#2196F3"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvProductQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Qty: 0"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                android:text="Total Stock: 150"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -80,6 +105,13 @@
             android:layout_marginTop="12dp"
             android:gravity="end"
             android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnView"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View" />
 
             <Button
                 android:id="@+id/btnEdit"

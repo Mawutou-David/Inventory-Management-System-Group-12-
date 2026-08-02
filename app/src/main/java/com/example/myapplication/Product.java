@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String id;
     private String name;
     private String category;
@@ -23,4 +25,10 @@ public class Product {
     public String getSupplier() { return supplier; }
     public double getPrice() { return price; }
     public int getQuantity() { return quantity; }
+
+    public void setName(String name) { this.name = name; }
+    public void setCategory(String category) { this.category = category; }
+    public void setSupplier(String supplier) { this.supplier = supplier; }
+    public void setPrice(double price) { this.price = price; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 }
